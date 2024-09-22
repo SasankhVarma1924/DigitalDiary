@@ -1,0 +1,165 @@
+.PastRecordsContainer
+{
+  width: 19vw;
+  height: 97.5vh;
+  background-color: #121212;
+}
+
+.DateStyle
+{
+  display: block;
+  color: white;
+  margin-left: 2%;
+  margin-right: 2%;
+  font-family: monospace;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.DateStyle:hover
+{
+  background-color: #1C1C1C;
+}
+
+.DiaryContainer {
+  width: 60vw;              
+  height: 97.5vh; 
+  background-color: #1C1C1C;
+  color: #E0E0E0; 
+  font-family: monospace;
+  font-size: 1.5em;
+  margin-left: auto;      
+  margin-right: auto;
+
+  padding: 25px; 
+  box-sizing: border-box;
+  overflow-y: auto;          
+}
+
+.DiaryContainer:focus
+{
+  outline: none;
+}
+
+.DiaryContainer::-webkit-scrollbar
+{
+  width: 15px;
+}
+.DiaryContainer::-webkit-scrollbar-track
+{
+  background-color: #1C1C1C;
+}
+
+.DiaryContainer::-webkit-scrollbar-thumb
+{
+  background-color: #4A4A4A;
+}
+
+.DiaryContainer::-webkit-scrollbar-thumb:hover
+{
+  cursor: pointer;
+}
+
+.EditingContainer
+{
+  width: 19vw;
+  height: 97.5vh; 
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ToolContainer
+{
+  display: flex;
+  margin-top: 5%;
+  gap: 20px;
+  border-radius: 5px;
+  align-items: center;
+  background-color: #1C1C1C;
+}
+
+
+.FormattingButtons
+{
+  font-size: 1.2em;
+  font-family: monospace;
+  color: #4A90E2;
+  background-color: white;
+  border: none;
+  text-align: center;
+  line-height: 1.5;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  transition: color 0.25s ease-in;
+  transition: background-color 0.25s ease-out;
+  cursor: pointer;
+}
+
+.FormattingButtons:hover
+{
+  background-color: #4A90E2;
+  color: white;
+}
+
+.FormattingButtons.active {
+  background-color: #4A90E2;
+  color: white;
+}
+
+.TextStyle
+{
+  font-size: 1.2em;
+  font-family: monospace;
+  color: #4A90E2;
+  background-color: white;
+  padding: 5px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.25s ease-in;
+  transition: background-color 0.25s ease-out;
+}
+
+.TextStyle:hover
+{
+  background-color: #4A90E2;
+  color: white;
+}
+
+.TextStyle:focus
+{
+  outline: none;
+}
+
+.TextStyle option
+{
+  color: #4A90E2;
+  background-color: white;
+  cursor: pointer;
+}
+
+.ColorSelector
+{
+  font-size: 1.2em;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.ColorSelector::-webkit-color-swatch {
+  border-radius: 5px;
+  border: none;
+}

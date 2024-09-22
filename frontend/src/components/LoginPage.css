@@ -1,0 +1,72 @@
+.UserDetailsContainer
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1E1E1E;
+  border-radius: 8px; 
+  margin: 15px 41% 15px;
+}
+
+.UserName
+{
+  text-align:center;
+  margin-top:10px;
+  border-radius: 8px;
+  color: #B0B0B0;
+  background-color: #121212;
+  border: none;
+  font-family: monospace;
+  font-size: 1.5em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.Password
+{
+  text-align:center;
+  border-radius: 8px;
+  color: #B0B0B0;
+  margin-top: 10px;
+  background-color: #121212;
+  border: none;
+  font-family: monospace;
+  font-size: 1.5em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.SignButton
+{
+  margin-top: 10px;
+  margin-bottom: 10%;
+  color: #4A90E2;
+  background-color: #FFFFFF; 
+  padding-left: 28%;
+  padding-right: 28%;
+  border-radius: 8px;
+  border: none;
+  font-family: monospace;
+  font-size: 1.5em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  transition: color 0.25s ease-in;
+  transition: background-color 0.25s ease-out;
+}
+
+.SignButton:hover
+{
+  background-color: #4A90E2;
+  color: #FFFFFF;
+}
+
+.AltSignup {
+  color: #4A90E2;
+  font-family: monospace;
+  font-size: 1.1em;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
