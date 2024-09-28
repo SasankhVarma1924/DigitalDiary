@@ -37,10 +37,10 @@ function Diary()
 
   const handleFormatButtonsClick = (event) =>
   {
-    const clickedButton = event.target.name;
-    const isClicked = checkActiveButtons[clickedButton];
+    const clickedButton = event.target.getAttribute("data-name");
+    const diaryContainer = document.querySelector(".DiaryContainer");
+    diaryContainer.focus();
     event.target.classList.toggle("active");
-    setCheckActiveButtons({...checkActiveButtons, [clickedButton] : !isClicked});
   }
 
   return (
@@ -79,10 +79,10 @@ function Diary()
         <div className="EditingContainer">
           <h1 style={{color:"#00BCD4", fontFamily:"monospace", textAlign:"center"}}>Tools</h1>
           <div className="ToolContainer" style={{marginTop:"0px"}}>
-            <button className="FormattingButtons" name="bold" style={{marginLeft:"20px"}} onClick={handleFormatButtonsClick}>B</button>
-            <button className="FormattingButtons" name="italic" onClick={handleFormatButtonsClick}>I</button>
-            <button className="FormattingButtons" name="underline" onClick={handleFormatButtonsClick}>U</button>
-            <button className="FormattingButtons" name="strike" style={{marginRight:"20px"}} onClick={handleFormatButtonsClick}>S</button>
+            <button className="FormattingButtons" data-name="bold" style={{marginLeft:"20px"}} onClick={handleFormatButtonsClick}>B</button>
+            <button className="FormattingButtons" data-name="italic" onClick={handleFormatButtonsClick}>I</button>
+            <button className="FormattingButtons" data-name="underline" onClick={handleFormatButtonsClick}>U</button>
+            <button className="FormattingButtons" data-name="strikeThrough" style={{marginRight:"20px"}} onClick={handleFormatButtonsClick}>S</button>
           </div>
 
           <div className="ToolContainer">
@@ -103,14 +103,14 @@ function Diary()
           </div>
 
           <div className="ToolContainer">
-            <GoListOrdered className="FormattingButtons" name="orderedlist" size={20} style={{marginLeft:"20px"}} onClick={handleFormatButtonsClick}/>
-            <GoListUnordered className="FormattingButtons" name="unorderedlist" size={20} style={{marginRight:"20px"}} onClick={handleFormatButtonsClick}/>
+            <GoListOrdered className="FormattingButtons" data-name="insertOrderedList" size={20} style={{marginLeft:"20px"}} onClick={handleFormatButtonsClick}/>
+            <GoListUnordered className="FormattingButtons" data-name="insertUnorderedList" size={20} style={{marginRight:"20px"}} onClick={handleFormatButtonsClick}/>
           </div>
 
           <div className="ToolContainer">
-            <CiTextAlignLeft className="FormattingButtons" name="alignleft" size={20} style={{marginLeft:"20px"}} onClick={handleFormatButtonsClick}/>
-            <CiTextAlignCenter className="FormattingButtons" name="aligncenter" size={20} onClick={handleFormatButtonsClick}/>
-            <CiTextAlignRight className="FormattingButtons" name="alignright" size={20} style={{marginRight:"20px"}} onClick={handleFormatButtonsClick}/>
+            <CiTextAlignLeft className="FormattingButtons" data-name="justifyLeft" size={20} style={{marginLeft:"20px"}} onClick={handleFormatButtonsClick}/>
+            <CiTextAlignCenter className="FormattingButtons" data-name="justifyCenter" size={20} onClick={handleFormatButtonsClick}/>
+            <CiTextAlignRight className="FormattingButtons" data-name="justifyRight" size={20} style={{marginRight:"20px"}} onClick={handleFormatButtonsClick}/>
           </div>
 
           <div className="ToolContainer">
