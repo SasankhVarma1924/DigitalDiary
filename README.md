@@ -4,7 +4,7 @@ Digital Diary is a web application that allows users to securely write and manag
 
 #### Website Link : https://digitaldiary.onrender.com/
 
-![Screenshot 2024-09-29 222725](https://github.com/user-attachments/assets/772d1604-ff06-4633-9fc8-d552dd84e0e4)
+![Screenshot 2024-09-29 222725](https://github.com/user-attachments/assets/2f5cb64d-e9d2-4506-9b52-a705bbb9f26d)
 
 ## Technologies Used
 
