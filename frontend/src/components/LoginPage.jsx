@@ -36,7 +36,7 @@ function LoginPage()
     if(haveAccount)
     {
       setUsername(uname);
-      const response = await fetch("http://localhost:5000/api/users/signin", 
+      const response = await fetch("https://digitaldiary-backend.onrender.com/api/users/signin", 
         {
           method: "POST",
           headers: {"Content-type" : "application/json"},
@@ -61,7 +61,7 @@ function LoginPage()
     }
     else
     {
-      const response = await fetch("http://localhost:5000/api/users/signup", 
+      const response = await fetch("https://digitaldiary-backend.onrender.com/api/users/signup", 
         {
           method: "POST",
           headers: {"Content-Type" : "application/json"},

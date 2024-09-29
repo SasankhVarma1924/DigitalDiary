@@ -47,7 +47,7 @@ function TextEditor()
         content : content,
         createdAt : currentDate
       }
-      const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
+      const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}/${currentDate}`, 
         {
           method: "GET"
         }
@@ -56,7 +56,7 @@ function TextEditor()
       const res = await response.json();
       if(res.code === "MNF")
       {
-        const response = await fetch(`http://localhost:5000/api/memories/${username}`, 
+        const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}`, 
           {
             method: "POST",
             headers: {"Content-type" : "application/json"},
@@ -68,7 +68,7 @@ function TextEditor()
       }
       else
       {
-        const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
+        const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}/${currentDate}`, 
           {
             method:"PUT",
             headers: {"Content-type" : "application/json"},
@@ -84,7 +84,7 @@ function TextEditor()
     {
       toast.success("Deleted!");
       currentDate.setHours(0, 0, 0, 0);
-      const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
+      const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}/${currentDate}`, 
         {
           method: "DELETE"
         }

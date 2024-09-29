@@ -31,7 +31,7 @@ function Diary()
     }
     dateClicked.current = event.target;
 
-    const response = await fetch(`http://localhost:5000/api/memories/${username}/${dateName}`, 
+    const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}/${dateName}`, 
       {
         method:"GET",
       }
@@ -51,7 +51,7 @@ function Diary()
     async function fetchUserMemories()
     {
       const memoriesContainer = document.querySelector(".memoriesContainer");
-      const response = await fetch(`http://localhost:5000/api/memories/${username}`, 
+      const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}`, 
         {
           method: "GET"
         }
@@ -85,7 +85,7 @@ function Diary()
       }
     }
     async function setTodaysMemory() {
-      const response = await fetch(`http://localhost:5000/api/memories/${username}/${today}`, 
+      const response = await fetch(`https://digitaldiary-backend.onrender.com/api/memories/${username}/${today}`, 
         {
           method: "GET"
         }
