@@ -26,8 +26,7 @@ body{
 .ql-toolbar {
   display: flex;
   order: 2;
-  margin-left: auto;
-  margin-right: auto;
+  width: 25vw;
   align-items: center;
   flex-direction: column;
   border: none !important;
@@ -135,4 +134,60 @@ body{
 
 .ql-toolbar.ql-snow .ql-picker-options {
   box-shadow: none;
+}
+
+.buttonContainer
+{
+  align-self: center;
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+}
+
+.savebuttonStyle
+{
+  margin-top: 20px;
+  color: #E94E77 !important;
+  background-color: #FFFFFF !important; 
+  padding-left: 28% !important;
+  padding-right: 28% !important;
+  border-radius: 8px !important;
+  border: none !important;
+  font-family: monospace !important;
+  font-size: 1.5em !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  cursor: pointer !important;
+  transition: color 0.25s ease-in !important;
+  transition: background-color 0.25s ease-out !important;
+}
+
+.savebuttonStyle:hover
+{
+  background-color: #E94E77 !important;
+  color: #FFFFFF !important;
+}
+
+.deletebuttonStyle
+{
+  margin-top: 20px;
+  color: #4A90E2 !important;
+  background-color: #FFFFFF !important; 
+  padding-left: 20% !important;
+  padding-right: 20% !important;
+  border-radius: 8px !important;
+  border: none !important;
+  font-family: monospace !important;
+  font-size: 1.5em !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  cursor: pointer !important;
+  transition: color 0.25s ease-in !important;
+  transition: background-color 0.25s ease-out !important;
+}
+
+.deletebuttonStyle:hover
+{
+  background-color: #4A90E2 !important;
+  color: #FFFFFF !important;
 }

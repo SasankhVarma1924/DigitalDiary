@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GlobalStateContext } from "../GlobalState";
 import "./LoginPage.css"
 
 function LoginPage()
 {
+  const {username, setUsername} = useContext(GlobalStateContext);
   const navigate = useNavigate();
   const [haveAccount, sethaveAccount] = useState(true);
   const [message, setMessage] = useState('');
@@ -12,28 +14,29 @@ function LoginPage()
   {
     event.preventDefault();
     const form = event.target;
-    const username = form.username.value.trim();
-    const password = form.password.value.trim();
-    const cnfrmpassword = haveAccount ? '' : form.cnfrmpassword.value.trim();
-    if (username === '') {
+    const uname = form.username.value.trim();
+    const pwd = form.password.value.trim();
+    const cnfrmpwd = haveAccount ? '' : form.cnfrmpassword.value.trim();
+    if (uname === '') {
         setMessage('Username is required');
         return;
     }
-    if (password === '') {
+    if (pwd === '') {
         setMessage('Password is required');
         return;
     }
-    if (!haveAccount && password !== cnfrmpassword) {
+    if (!haveAccount && pwd !== cnfrmpwd) {
         setMessage('Passwords do not match');
         return;
     }
-    const user = {username: username, password: password};
+    const user = {username: uname, password: pwd};
     if(haveAccount)
     {
+      setUsername(uname);
       const response = await fetch("http://localhost:5000/api/users/signin", 
         {
           method: "POST",
-          headers: {"Content-Type" : "application/json"},
+          headers: {"Content-type" : "application/json"},
           body: JSON.stringify(user)
         }
       )

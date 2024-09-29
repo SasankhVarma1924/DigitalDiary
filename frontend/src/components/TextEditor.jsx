@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react'
+import { memo, useContext, useEffect, useRef, useState } from 'react'
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css';
 import "./TextEditor.css"
+import { GlobalStateContext } from '../GlobalState';
 
 function TextEditor()
 {
-  const [content, setContent] = useState('');
-
-  const handleContentChange = (value) => {
-    setContent(value);
-  };
-
   const modules = {
     toolbar: [
       [{ 'font': [] }, { 'size': [] }],
@@ -32,6 +27,85 @@ function TextEditor()
     'color', 'background', 'align', 'list', 'indent'
   ];
 
+  const {username, content, setContent, currentDate} = useContext(GlobalStateContext);
+  const saveButtonRef = useRef(null);
+  const deleteButtonRef = useRef(null);
+  
+  const handleContentChange = (value) => {
+    setContent(value);
+  };
+
+  useEffect(() =>
+  {
+
+    const handleSaveButtonClick = async () =>
+    {
+      console.log("save");
+      currentDate.setHours(0, 0, 0, 0);
+      const memory = {
+        content : content,
+        createdAt : currentDate
+      }
+      const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
+        {
+          method: "GET"
+        }
+      );
+
+      const res = await response.json();
+      if(res.code === "MNF")
+      {
+        const response = await fetch(`http://localhost:5000/api/memories/${username}`, 
+          {
+            method: "POST",
+            headers: {"Content-type" : "application/json"},
+            body: JSON.stringify(memory)
+          }
+        )
+        const res = await response.json();
+        console.log(res.msg);
+      }
+      else
+      {
+        const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
+          {
+            method:"PUT",
+            headers: {"Content-type" : "application/json"},
+            body : JSON.stringify(memory)
+          }
+        )
+        const res = await response.json();
+        console.log(res.msg);
+      }
+    };
+
+    const handleDeleteButtonClick = async () =>
+    {
+      console.log("delete");
+      currentDate.setHours(0, 0, 0, 0);
+      const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
+        {
+          method: "DELETE"
+        }
+      )
+      const res = await response.json();
+      if(res.code === "MD")
+      {
+        console.log(res.msg);
+        setContent("");
+      }
+    };
+
+    saveButtonRef.current?.addEventListener("click", handleSaveButtonClick);
+    deleteButtonRef.current?.addEventListener("click", handleDeleteButtonClick);
+
+    return () =>
+    {
+      saveButtonRef.current?.removeEventListener("click", handleSaveButtonClick);
+      deleteButtonRef.current?.removeEventListener("click", handleDeleteButtonClick);
+    }
+  }, [content, currentDate]);
+
   useEffect(() => {
     const container = document.querySelector(".ql-toolbar");
     if (!container.querySelector('.tools-header')) {
@@ -44,8 +118,24 @@ function TextEditor()
       tooltag.style.fontWeight = "bold"
       tooltag.style.fontSize = "2em";
       container.prepend(tooltag);
+
+      const divContainer = document.createElement("div");
+      const saveButton = document.createElement("button");
+      const deleteButton = document.createElement("button");
+
+      divContainer.classList.add("buttonContainer")
+      saveButton.textContent = "Save";
+      deleteButton.textContent = "Delete"
+      saveButton.classList.add("savebuttonStyle");
+      deleteButton.classList.add("deletebuttonStyle");
+      
+      saveButtonRef.current = saveButton;
+      deleteButtonRef.current = deleteButton;
+
+      divContainer.appendChild(saveButton);
+      divContainer.appendChild(deleteButton);
+      container.appendChild(divContainer);
     }
-    
   }, []);
   
 

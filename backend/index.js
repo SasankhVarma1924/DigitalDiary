@@ -49,7 +49,8 @@ app.get("/", (req, res) =>
   res.send("hi");
 })
 
-app.post("/api/users/signup", async (req, res) =>
+// user signup
+app.put("/api/users/signup", async (req, res) =>
 {
   try {
     const user = new User({
@@ -60,13 +61,14 @@ app.post("/api/users/signup", async (req, res) =>
     return res.status(201).json({success: true, msg : "successfully signed in"});
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(400).json({success: false, msg: 'Username already exists'});
+      return res.status(400).json({success: false, msg: 'Username already exists', code: "UAE"});
     } else {
-      return res.status(500).json({success: false, msg: 'Error creating user'});
+      return res.status(500).json({success: false, msg: 'Error creating user', code: "ISE"});
     }
   }
 })
 
+// user signin
 app.post("/api/users/signin", async (req, res) =>
 {
   try {
@@ -74,35 +76,39 @@ app.post("/api/users/signin", async (req, res) =>
     const found = await userDetailsCollection.findOne(user);
     if(!found)
     {
-      return res.status(404).json({success: false, msg: "User not found"});
+      return res.status(404).json({success: false, msg: "User not found", code:"UNF"});
     }
     return res.status(200).json({success: true, msg : "User found"});
   } catch (error) {
-    return res.status(500).json({success: false, msg : "Internal Server error"});
+    return res.status(500).json({success: false, msg : "Internal Server error", code: "ISE"});
   }
 })
 
+// put new memory into the db
 app.post("/api/memories/:name", async (req, res) =>
 {
   try {
     const uname = req.params.name;
+    const mdate = new Date(req.body.createdAt);
     const user = await userDetailsCollection.findOne({username: uname});
     if(!user)
     {
-      return res.status(404).json({success: false, msg: "user not found"});
+      return res.status(404).json({success: false, msg: "user not found", code:"UNF"});
     }
     const uId = user._id;
     const memory = new Memory({
       userId : uId,
-      content : req.body.content
+      content : req.body.content,
+      createdAt : mdate
     });
     await memory.save();
-    return res.status(201).json({success: false, msg: "added to memories"});
+    return res.status(201).json({success: true, msg: "added to memories", code: "MA"});
   } catch (error) {
-    return res.status(500).json({success: false, msg: "internal server error"});
+    return res.status(500).json({success: false, msg: "internal server error", error: error, code:"ISE"});
   }
 })
 
+// get the memory with name and date
 app.get("/api/memories/:name/:date", async (req, res) =>
 {
   try{
@@ -111,7 +117,7 @@ app.get("/api/memories/:name/:date", async (req, res) =>
     const user = await userDetailsCollection.findOne({username: uname});
     if(!user)
     {
-      return res.status(404).json({success: false, msg: "user not found"});
+      return res.status(404).json({success: false, msg: "user not found", code: "UNF"});
     }
     const uId = user._id;
     const startOfDay = new Date(mdate.setHours(0, 0, 0, 0));
@@ -125,15 +131,16 @@ app.get("/api/memories/:name/:date", async (req, res) =>
       },
     });
     if (userMemory) {
-      return res.status(201).json({success: true, msg: "Retreived Memory", content: userMemory.content});
+      return res.status(201).json({success: true, msg: "Found Memory", content: userMemory.content, code: "MF"});
     } else {
-      return res.status(404).json({ message: 'No memories found for this date.' });
+      return res.status(404).json({success: false, msg: 'No memories found for this date.', code : "MNF"});
     }
   } catch (error) {
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({success: false, msg: 'Server error', code: "ISE"});
   }
 });
 
+// get all the memories of the user with name
 app.get("/api/memories/:name", async (req, res) =>
 {
   try {
@@ -141,23 +148,25 @@ app.get("/api/memories/:name", async (req, res) =>
     const user = await userDetailsCollection.findOne({username: uname});
     if(!user)
     {
-      return res.status(404).json({success: false, msg: "user not found"});
+      return res.status(404).json({success: false, msg: "user not found", code: "UNF"});
     }
     const uId = user._id;
 
     const memories = await memoriesCollection
-        .find({ userId: uId }, { projection: { content: 1, createdAt: 1, _id: 0} })
+        .find({ userId: uId }, { projection: { createdAt: 1, _id: 0} })
         .sort({ createdAt: -1 })
         .limit(10)
         .toArray();
     if(memories.length <= 0)
-      return res.status(404).json({success: false, msg : "No memories found"});
-    return res.status(201).json({success: true, msg : "Retreived all memories", memories : memories});
+      return res.status(404).json({success: false, msg : "No memories found", code: "MNF"});
+    return res.status(201).json({success: true, msg : "Found all memories", memories : memories, code: "MF"});
   } catch (error) {
-    return res.status(500).json({ success: false, msg: "Server error" });
+    return res.status(500).json({ success: false, msg: "Server error", code: "ISE"});
   }
 });
 
+
+// update memory with name and date
 app.put("/api/memories/:name/:date", async (req, res) =>
 {
   try {
@@ -169,7 +178,7 @@ app.put("/api/memories/:name/:date", async (req, res) =>
     const user = await userDetailsCollection.findOne({username: uname});
     if(!user)
     {
-      return res.status(404).json({success: false, msg: "user not found"});
+      return res.status(404).json({success: false, msg: "user not found", code:"UNF"});
     }
     const uId = user._id;
 
@@ -183,13 +192,45 @@ app.put("/api/memories/:name/:date", async (req, res) =>
       },{$set : {content: content}}
     );
     if (result.matchedCount === 0) {
-      return res.status(404).json({ success: false, msg: "No memory found for the given date" });
+      return res.status(404).json({ success: false, msg: "No memory found for the given date", code: "MNF"});
     }
-    return res.json({ success: true, msg: "Memory content updated" });
+    return res.json({ success: true, msg: "Memory content updated", code: "MU"});
   } catch (error) {
-    res.status(500).json({ success: false, msg: "Server error" });
+    res.status(500).json({ success: false, msg: "Server error", code: "ISE"});
   }
 
+})
+
+// delete a memory with name and date
+app.delete("/api/memories/:name/:date", async (req, res) =>
+{
+  try {
+    const uname = req.params.name;
+    const mdate = new Date(req.params.date);
+    const startOfDay = new Date(mdate.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(mdate.setHours(23, 59, 59, 999));
+    const user = await userDetailsCollection.findOne({username: uname});
+    if(!user)
+    {
+      return res.status(404).json({success: false, msg: "user not found", code:"UNF"});
+    }
+    const uId = user._id;
+    const result = await memoriesCollection.deleteOne({
+      userId : uId,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      }
+    })
+
+    if(result.deletedCount === 0)
+    {
+      return res.status(404).json({ success: false, msg: "No memory found to delete", code: "MNF"})
+    }
+    return res.status(200).json({ success: true, msg: "Deleted Memory", code: "MD"});
+  } catch (error) {
+    return res.status(500).json({ success: false, msg: "Server error", code: "ISE"});
+  }
 })
 
 app.listen(PORT, () => {console.log(`listening to ${PORT}`)});
