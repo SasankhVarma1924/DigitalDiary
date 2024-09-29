@@ -2,3 +2,8 @@
 {
   background-color: #121212;
 }
+
+.custom-toast {      
+  height: auto;             
+  font-family: monospace;
+}

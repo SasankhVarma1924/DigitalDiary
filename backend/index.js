@@ -50,7 +50,7 @@ app.get("/", (req, res) =>
 })
 
 // user signup
-app.put("/api/users/signup", async (req, res) =>
+app.post("/api/users/signup", async (req, res) =>
 {
   try {
     const user = new User({
@@ -155,7 +155,6 @@ app.get("/api/memories/:name", async (req, res) =>
     const memories = await memoriesCollection
         .find({ userId: uId }, { projection: { createdAt: 1, _id: 0} })
         .sort({ createdAt: -1 })
-        .limit(10)
         .toArray();
     if(memories.length <= 0)
       return res.status(404).json({success: false, msg : "No memories found", code: "MNF"});

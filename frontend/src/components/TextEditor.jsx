@@ -3,6 +3,7 @@ import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css';
 import "./TextEditor.css"
 import { GlobalStateContext } from '../GlobalState';
+import { toast } from 'react-toastify';
 
 function TextEditor()
 {
@@ -40,7 +41,7 @@ function TextEditor()
 
     const handleSaveButtonClick = async () =>
     {
-      console.log("save");
+      toast.success("Saved!");
       currentDate.setHours(0, 0, 0, 0);
       const memory = {
         content : content,
@@ -81,7 +82,7 @@ function TextEditor()
 
     const handleDeleteButtonClick = async () =>
     {
-      console.log("delete");
+      toast.success("Deleted!");
       currentDate.setHours(0, 0, 0, 0);
       const response = await fetch(`http://localhost:5000/api/memories/${username}/${currentDate}`, 
         {

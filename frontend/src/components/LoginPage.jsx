@@ -2,6 +2,9 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalState";
 import "./LoginPage.css"
+import { toast } from 'react-toastify';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; 
 
 function LoginPage()
 {
@@ -44,7 +47,16 @@ function LoginPage()
       if(res.success)
       {
         console.log(res.msg);
-        navigate("/diary");
+        const SignUpPageContainer = document.querySelector(".SignUpPageContainer");
+        SignUpPageContainer.classList.add("fade-out");
+        toast.success("Logged in!");
+        setTimeout(() => {
+          navigate("/diary");
+        }, 500)
+      }
+      else
+      {
+        toast.error("Account not Found!");
       }
     }
     else
@@ -60,7 +72,12 @@ function LoginPage()
       if(res.success)
       {
         console.log(res.msg);
+        toast.success("Account Created!");
         sethaveAccount(true);
+      }
+      else if(res.code === "UAE")
+      {
+        toast.info("Account already exists!");
       }
     }
   }

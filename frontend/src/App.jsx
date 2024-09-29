@@ -3,11 +3,27 @@ import "./App.css"
 import LoginPage from "./components/LoginPage.jsx"
 import Diary from "./components/Diary.jsx"
 import { GlobalStateProvider } from "./GlobalState.jsx"
+import { ToastContainer, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   return (
     <>
+      <ToastContainer
+        toastClassName="custom-toast"
+        transition={Zoom}
+        position="top-right"
+        autoClose={500}
+        hideProgressBar
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        theme="dark"
+      />
       <GlobalStateProvider>
         <BrowserRouter>
           <Routes>

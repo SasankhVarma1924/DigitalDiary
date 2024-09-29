@@ -101,11 +101,13 @@ function Diary()
     fetchUserMemories();
     setTodaysMemory();
     setCurrentDate(today);
+    const DiaryContainer = document.querySelector(".DiaryContainer");
+    DiaryContainer.classList.add("fade-in");
   }, []);
 
   return (
     <>
-      <div style={{display:"flex", gap:"50px"}}>
+      <div className="DiaryContainer" style={{display:"flex", gap:"50px"}}>
         <div className="PastRecordsContainer">
 
           <div className="todayContainer">
@@ -115,8 +117,9 @@ function Diary()
             </span>
           </div>
           
-          <div className="memoriesContainer">
+          <div>
             <h1 style={{color: "#E94E77", marginLeft:"2%", fontFamily:"monospace"}}>Memories</h1>
+            <div className="memoriesContainer"></div>
           </div>
           
         </div>

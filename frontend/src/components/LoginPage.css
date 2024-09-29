@@ -1,3 +1,14 @@
+.SignUpPageContainer
+{
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
+}
+
+.SignUpPageContainer.fade-out
+{
+  opacity: 0;
+}
+
 .UserDetailsContainer
 {
   display: flex;

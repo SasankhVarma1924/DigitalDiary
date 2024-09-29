@@ -1,3 +1,14 @@
+.DiaryContainer
+{
+  opacity: 0;
+  transition: opacity 0.25s ease-in;
+}
+
+.DiaryContainer.fade-in
+{
+  opacity: 1;
+}
+
 .PastRecordsContainer
 {
   width: 25vw;
@@ -23,4 +34,20 @@
 .DateStyle:hover
 {
   background-color: #1C1C1C;
+}
+
+.memoriesContainer
+{
+  width: auto;
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.memoriesContainer::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
+}
+
+/* Hide scrollbar for Firefox */
+.memoriesContainer {
+  scrollbar-width: none; /* Hide scrollbar */
 }
